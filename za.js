@@ -13,6 +13,6 @@ var za = module.exports = function (config) {
 // Expose the version number, but only load package JSON if a get is performed.
 Object.defineProperty(za, 'version', {
   get: function () {
-    return require('./package.json').version;
+    return require(__dirname + '/package.json').version;
   }
 });
