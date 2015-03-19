@@ -1,9 +1,7 @@
 var request = require('supertest');
-var http = require('http');
 var server = require('./fixtures/http-test-server');
 var responses = require('./fixtures/response-fixtures');
 var jsonBody = responses.shortJson;
-var codes = server.codes;
 
 describe('http', function () {
 
@@ -60,17 +58,6 @@ describe('http', function () {
     });
   });
   describe('send', function () {
-
-    codes.forEach(function (code) {
-      it('returns status code ' + code, function (done) {
-        request(server.requestListener()).get('/send/' + code)
-          .expect('content-type', /json/)
-          .expect(parseInt(code))
-          .expect(http.STATUS_CODES[code])
-          .end(done);
-
-      });
-    });
 
     it('writes json', function (done) {
       request(server.requestListener()).get('/send/json')

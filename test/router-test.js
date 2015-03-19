@@ -1,8 +1,10 @@
-var request         = require('supertest');
-var qs              = require('qs');
-var server          = require('./fixtures/router-test-server');
-var bodies          = require('./fixtures/body-fixtures');
-var responses       = require('./fixtures/response-fixtures');
+var request = require('supertest');
+var qs = require('qs');
+var server = require('./fixtures/router-test-server');
+var bodies = require('./fixtures/body-fixtures');
+var responses = require('./fixtures/response-fixtures');
+var is = global.is || require('exam/lib/is');
+var mock = global.mock || require('exam/lib/mock');
 
 describe('Router', function () {
 
@@ -90,15 +92,15 @@ describe('Router', function () {
 
     it('should log a warning when invalid JSON is passed', function (done) {
       var parse = require('../lib/parse');
-      var logger = parse.logger;
-      is(logger, console);
-      parse.logger = {warn: mock.concat()};
+      var log = parse.log;
+      is(log, console);
+      parse.log = {warn: mock.concat()};
       request(server.requestListener())
        .post('/json')
        .set('Content-Type', 'application/json')
        .send('{"key":"value"} Whoops!')
        .end(function () {
-         parse.logger = logger;
+         parse.log = log;
          done();
        });
     });

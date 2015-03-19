@@ -1,12 +1,13 @@
 var http = require('http');
-var Server = require('../lib/Server');
+var Server = require('../../za').Server;
+var is = global.is || require('exam/lib/is');
 var app;
 
 // TODO: Move middleware-related tests here.
 describe('Middleware', function () {
 
   before(function () {
-    app = new Server({http: 9876});
+    app = new Server({port: 9876});
   });
 
   after(function () {

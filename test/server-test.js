@@ -1,24 +1,7 @@
-var za = require('../za');
-var request = require('supertest');
-var qs = require('qs');
-var zlib = require('zlib');
 var http = require('http');
 
 describe('Server', function () {
   var testServer = require('./fixtures/server-test-server');
-  var bodies = require('./fixtures/body-fixtures');
-  var response = require('./fixtures/response-fixtures');
-
-  it('should throw error for unsupported protocol route', function () {
-    try {
-      testServer.get('/', function (req, res) {
-        res.send('something');
-      }, 'gmarket');
-    } catch (e) {
-      return;
-    }
-    is.fail('should have thrown an error');
-  });
 
   it('should return requestListener', function () {
     is.lengthOf(testServer.requestListener(), 2);
