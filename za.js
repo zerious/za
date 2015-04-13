@@ -1,13 +1,13 @@
 var dir = __dirname;
 var fs = require('fs');
-var Router = require(dir + '/lib/router');
+var Router = require(dir + '/lib/_router');
 var parse = require(dir + '/lib/parse');
 var Type = require(dir + '/common/object/type');
 var defaultPort = 8888;
 
 // Decorate Request and Response prototypes.
-require(dir + '/lib/request');
-require(dir + '/lib/response');
+require(dir + '/lib/_request');
+require(dir + '/lib/_response');
 
 // Za is a Server factory function.
 var za = module.exports = function (options) {
