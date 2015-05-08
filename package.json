@@ -4,12 +4,9 @@
   "description": "A fast Node.js web server",
   "dependencies": {},
   "devDependencies": {
-    "coveralls": "2.10.0",
-    "istanbul": "0.2.11",
     "qs": "0.6.6",
     "supertest": "0.13.0",
-    "zeriousify": "^0.1.10",
-    "exam": "^0.1.5"
+    "exam": "^1.0.0"
   },
   "keywords": [
     "za"

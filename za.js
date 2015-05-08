@@ -1,13 +1,13 @@
 var dir = __dirname;
 var fs = require('fs');
-var Router = require(dir + '/lib/_router');
+var Router = require(dir + '/lib/router');
 var parse = require(dir + '/lib/parse');
 var Type = require(dir + '/common/object/type');
 var defaultPort = 8888;
 
 // Decorate Request and Response prototypes.
-require(dir + '/lib/_request');
-require(dir + '/lib/_response');
+require(dir + '/lib/request');
+require(dir + '/lib/response');
 
 // Za is a Server factory function.
 var za = module.exports = function (options) {
@@ -31,9 +31,8 @@ var Server = za.Server = Type.extend({
   // By default, don't start off listening.
   port: null,
 
-  // Optionally provide a key and cert file for HTTPS.
-  keyPath: null,
-  certPath: null,
+  // Optionally provide SSL options for HTTPS.
+  ssl: null,
 
   // Optionally keep a reference to the app that invoked Za.
   app: null,
@@ -48,6 +47,11 @@ var Server = za.Server = Type.extend({
 
     // Point an app or this server as the app.
     self.setApp(self.app || self);
+
+    // Start listening.
+    if (self.ssl) {
+      self.protocol == 'https';
+    }
 
     // Start listening.
     if (self.port) {
@@ -103,10 +107,6 @@ var Server = za.Server = Type.extend({
   listen: function (port) {
     var self = this;
     port = self.port || port || defaultPort++;
-    var ssl = {
-      key: self.keyPath ? fs.readFileSync(self.keyPath) : 0,
-      cert: self.certPath ? fs.readFileSync(self.certPath) : 0
-    };
     var protocol = self.protocol;
     var router = self.router;
     var lib = require(protocol);
