@@ -1,5 +1,5 @@
-var qs = require('qs');
-var bodies = module.exports = {};
+var qs = require('qs')
+var bodies = module.exports = {}
 
 bodies.jsonBody = {
         hello: 'world',
@@ -10,6 +10,6 @@ bodies.jsonBody = {
             fields: 1,
             name: 'hello'
         }
-    };
+    }
 
-bodies.formBody = qs.stringify(bodies.jsonBody);
+bodies.formBody = qs.stringify(bodies.jsonBody)

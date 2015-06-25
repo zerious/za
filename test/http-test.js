@@ -1,7 +1,7 @@
-var request = require('supertest');
-var server = require('./fixtures/http-test-server');
-var responses = require('./fixtures/response-fixtures');
-var jsonBody = responses.shortJson;
+var request = require('supertest')
+var server = require('./fixtures/http-test-server')
+var responses = require('./fixtures/response-fixtures')
+var jsonBody = responses.shortJson
 
 describe('http', function () {
 
@@ -9,8 +9,8 @@ describe('http', function () {
     request(server.requestListener()).head('/send/json')
       .expect(200)
       .expect('')
-      .end(done);
-  });
+      .end(done)
+  })
 
   describe('zip', function () {
     it('returns zipped content', function (done) {
@@ -18,76 +18,76 @@ describe('http', function () {
         .set('accept-encoding', 'gzip')
         .expect('content-encoding', 'gzip')
         .end(function (err, res) {
-          is.null(err);
-          done();
-        });
-    });
+          is.null(err)
+          done()
+        })
+    })
 
     it('returns unzipped content for short input', function (done) {
       request(server.requestListener()).get('/unzipped')
         .set('accept-encoding', 'gzip')
         .expect(function (res) {
-          is.undefined(res.headers['content-encoding']);
+          is.undefined(res.headers['content-encoding'])
         })
         .end(function (err, res) {
-          is.null(err);
-          done();
-        });
-    });
-  });
+          is.null(err)
+          done()
+        })
+    })
+  })
 
   describe('json', function () {
     it('returns unzipped json content', function (done) {
       request(server.requestListener()).get('/json')
         .set('accept-encoding', 'gzip')
         .expect(function (res) {
-          is.undefined(res.headers['content-encoding']);
+          is.undefined(res.headers['content-encoding'])
         })
         .expect(JSON.stringify(jsonBody))
         .end(function (err, res) {
-          is.null(err);
-          done();
-        });
-    });
+          is.null(err)
+          done()
+        })
+    })
 
     it('returns zipped json content', function (done) {
       request(server.requestListener()).get('/jsonzip')
         .set('accept-encoding', 'gzip')
         .expect('content-type', /json/)
-        .expect('content-encoding', /gzip/, done);
-    });
-  });
+        .expect('content-encoding', /gzip/, done)
+    })
+  })
   describe('send', function () {
 
     it('writes json', function (done) {
       request(server.requestListener()).get('/send/json')
         .expect(200)
         .expect(JSON.stringify(jsonBody))
-        .end(done);
-    });
+        .end(done)
+    })
 
     it('sets headers', function (done) {
       request(server.requestListener()).get('/header')
         .set('content-type', 'application/custom')
         .expect('application/custom')
         .expect(200)
-        .end(done);
-    });
+        .end(done)
+    })
 
     it('sets a cookie', function (done) {
       request(server.requestListener()).get('/cookie')
         .expect(200)
         .expect('set-cookie', 'coo=kie')
-        .end(done);
-    });
+        .end(done)
+    })
 
     it('redirects', function (done) {
       request(server.requestListener()).get('/redirect')
         .expect(302)
         .expect('location', 'http://google.com')
-        .end(done);
-    });
+        .end(done)
+    })
 
-  });
+  })
 
-});
+})

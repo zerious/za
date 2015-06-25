@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-var responses = module.exports = {};
+var responses = module.exports = {}
 
-responses.shortString = 'aaa';
+responses.shortString = 'aaa'
 
 // Preparation of long string
-responses.longString = '';
+responses.longString = ''
 while (responses.longString.length < 2e3) {
-    responses.longString += 'a';
+    responses.longString += 'a'
 }
 
 responses.shortJson = {
@@ -19,15 +19,15 @@ responses.shortJson = {
             fields: 1,
             name: 'hello'
         }
-    };
+    }
 
 // Preparation of long json body
-responses.longJson = {};
-var i = 0;
+responses.longJson = {}
+var i = 0
 while (i++ < 1e3) {
-    var key = 'key' + i;
-    responses.longJson[key] = 'value' + i;
+    var key = 'key' + i
+    responses.longJson[key] = 'value' + i
 }
 
-module.exporst = responses;
+module.exporst = responses
 

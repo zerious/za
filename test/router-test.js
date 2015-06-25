@@ -1,10 +1,10 @@
-var request = require('supertest');
-var qs = require('qs');
-var server = require('./fixtures/router-test-server');
-var bodies = require('./fixtures/body-fixtures');
-var responses = require('./fixtures/response-fixtures');
-var is = global.is || require('exam/lib/is');
-var mock = global.mock || require('exam/lib/mock');
+var request = require('supertest')
+var qs = require('qs')
+var server = require('./fixtures/router-test-server')
+var bodies = require('./fixtures/body-fixtures')
+var responses = require('./fixtures/response-fixtures')
+var is = global.is || require('exam/lib/is')
+var mock = global.mock || require('exam/lib/mock')
 
 describe('Router', function () {
 
@@ -15,63 +15,63 @@ describe('Router', function () {
         .send()
         .expect(200)
         .expect(JSON.stringify([1,2]))
-        .end(done);
-    });
+        .end(done)
+    })
     it('support async mode', function (done) {
       request(server.requestListener())
         .get('/async')
         .send()
         .expect(200)
         .expect(JSON.stringify([1,2]))
-        .end(done);
-    });
+        .end(done)
+    })
     it('support sync mode', function (done) {
       request(server.requestListener())
         .get('/sync')
         .send()
         .expect(200)
         .expect(JSON.stringify([1,3]))
-        .end(done);
-    });
+        .end(done)
+    })
     it('support wildcards', function (done) {
       request(server.requestListener())
         .get('/sync/me/ok')
         .send()
         .expect(200)
         .expect(JSON.stringify([1,3,4]))
-        .end(done);
-    });
-  });
+        .end(done)
+    })
+  })
 
   describe('@requestListener', function () {
     it('should return requestListener', function () {
-      var listener = server.requestListener('http');
-      is.function(listener);
-      is.lengthOf(listener, 2);
-    });
-  });
+      var listener = server.requestListener('http')
+      is.function(listener)
+      is.lengthOf(listener, 2)
+    })
+  })
 
   describe('.serve', function () {
 
     it('should return a 404 if the route is not found', function (done) {
       request(server.requestListener()).get('/notfound')
         .expect(404)
-        .end(done);
-    });
+        .end(done)
+    })
 
     it('should parse query params', function (done) {
       var queryObj = {
         hello: '12',
         world: 'too',
         array: ['some', 'array', 'value', 'oiu']
-      };
-      var query = qs.stringify(queryObj);
+      }
+      var query = qs.stringify(queryObj)
       request(server.requestListener()).get('/query?' + query)
         .expect(JSON.stringify(queryObj))
-        .end(done);
-    });
+        .end(done)
+    })
 
-  });
+  })
 
   describe('body parser', function () {
 
@@ -80,32 +80,32 @@ describe('Router', function () {
        .post('/json')
        .set('Content-Type', 'application/json')
        .send(JSON.stringify(bodies.jsonBody))
-       .end(done);
-    });
+       .end(done)
+    })
 
     it('should parse urlencoded post body', function (done) {
       request(server.requestListener())
        .post('/urlencoded')
        .send(bodies.formBody)
-       .end(done);
-    });
+       .end(done)
+    })
 
     it('should log a warning when invalid JSON is passed', function (done) {
-      var parse = require('../lib/parse');
-      var log = parse.log;
-      is(log, console);
-      parse.log = {warn: mock.concat()};
+      var parse = require('../lib/parse')
+      var log = parse.log
+      is(log, console)
+      parse.log = {warn: mock.concat()}
       request(server.requestListener())
        .post('/json')
        .set('Content-Type', 'application/json')
        .send('{"key":"value"} Whoops!')
        .end(function () {
-         parse.log = log;
-         done();
-       });
-    });
+         parse.log = log
+         done()
+       })
+    })
 
-  });
+  })
 
   describe('wildcards', function () {
     it('match anything', function (done) {
@@ -113,15 +113,15 @@ describe('Router', function () {
        .get('/wild/hello')
        .send()
        .expect('{"wild":"hello"}')
-       .end(done);
-    });
+       .end(done)
+    })
     it('can appear in the middle', function (done) {
       request(server.requestListener())
        .get('/something/profile')
        .send()
        .expect('{"profile":"something"}')
-       .end(done);
-    });
-  });
+       .end(done)
+    })
+  })
 
-});
+})
