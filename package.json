@@ -6,7 +6,7 @@
   "devDependencies": {
     "qs": "0.6.6",
     "supertest": "0.13.0",
-    "exam": "^1.0.0"
+    "exam": "git+https://github.com/zerious/exam.git"
   },
   "keywords": [
     "za"
