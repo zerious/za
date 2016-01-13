@@ -1,5 +1,4 @@
 var dir = __dirname
-var fs = require('fs')
 var Router = require(dir + '/lib/router')
 var parse = require(dir + '/lib/parse')
 var Type = require(dir + '/common/object/type')
